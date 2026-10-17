@@ -1,0 +1,9 @@
+# names and secrets the scripts generate locally
+infra/.lab.env
+*.kubeconfig
+kubeconfig*
+# tools and output
+/kubeconform
+kc.tgz
+*.log
+.DS_Store

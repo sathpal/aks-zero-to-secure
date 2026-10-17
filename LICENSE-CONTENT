@@ -1,0 +1,7 @@
+Course content: the Markdown text in this repository (README files, session guides, the capstone
+rubric and other documents) is licensed under the Creative Commons Attribution 4.0 International
+licence (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
+
+Copyright (c) 2026 Sathpal. Attribute as: "AKS: From Zero to Secure Production" by Sathpal.
+
+Code (app/, infra/, the lab/ manifests, scripts and workflows) is licensed under the MIT License; see LICENSE.

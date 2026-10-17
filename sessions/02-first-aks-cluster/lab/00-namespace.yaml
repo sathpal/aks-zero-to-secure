@@ -1,0 +1,5 @@
+# From session 2 onwards the app lives in one namespace, "payments", that later sessions keep improving.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: payments

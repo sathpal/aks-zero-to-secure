@@ -1,0 +1,5 @@
+# A namespace keeps everything from this session together, so cleanup is one command.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aks101

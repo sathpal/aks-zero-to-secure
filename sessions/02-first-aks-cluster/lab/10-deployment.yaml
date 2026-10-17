@@ -1,0 +1,25 @@
+# The session 1 Deployment, now pulling the image from your Azure Container Registry.
+# REGISTRY is replaced when you apply it:  sed "s|REGISTRY|$ACR.azurecr.io|" ... | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-api
+  namespace: payments
+  labels:
+    app.kubernetes.io/name: payments-api
+spec:
+  replicas: 4                              # enough to see pods spread over both nodes
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: payments-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: payments-api
+    spec:
+      containers:
+        - name: app
+          image: REGISTRY/payments-api:1.0
+          ports:
+            - name: http
+              containerPort: 8080

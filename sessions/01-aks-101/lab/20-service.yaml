@@ -1,0 +1,13 @@
+# A Service gives the pods one stable name and address inside the cluster and spreads requests across them.
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-api
+  namespace: aks101
+spec:
+  selector:
+    app.kubernetes.io/name: payments-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

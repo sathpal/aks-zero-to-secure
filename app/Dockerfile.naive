@@ -1,0 +1,9 @@
+# The single-stage build most teams start with. Session 1 builds it only to compare with Dockerfile.
+# Do not ship this: it carries the whole Go toolchain, a shell and a package manager, and it runs as root.
+FROM golang:1.25
+WORKDIR /src
+COPY . .
+ARG VERSION=dev
+RUN go build -ldflags "-X main.version=${VERSION}" -o /usr/local/bin/payments-api .
+EXPOSE 8080
+CMD payments-api

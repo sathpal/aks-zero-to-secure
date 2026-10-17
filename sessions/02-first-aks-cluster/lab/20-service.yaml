@@ -1,0 +1,15 @@
+# type: LoadBalancer asks AKS for an Azure load balancer rule and a public IP in front of the pods.
+# Plain HTTP, open to the internet: fine for a 2-hour lab with test data. Session 4 adds TLS through Gateway API.
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-api
+  namespace: payments
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: payments-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

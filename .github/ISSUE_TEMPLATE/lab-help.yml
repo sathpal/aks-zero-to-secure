@@ -1,0 +1,42 @@
+name: Lab help
+description: A lab step doesn't work as written, or the materials are wrong or out of date.
+labels: [lab-help]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For general questions, use [Discussions](https://github.com/sathpal/aks-zero-to-secure/discussions). Use this form when a lab step itself seems wrong.
+        **Never paste** keys, passwords, tokens, kubeconfig files or connection strings.
+  - type: dropdown
+    id: session
+    attributes:
+      label: Session
+      options: ["01 AKS 101", "02 First AKS Cluster", "03 Deploying Apps", "04 Networking", "05 Storage", "06 Commit to Cluster", "07 Observability", "08 Reliability, Scaling, Cost", "09 Security: Identity and Isolation", "10 Supply Chain + Capstone"]
+    validations: { required: true }
+  - type: input
+    id: step
+    attributes:
+      label: Part and step
+      placeholder: "Part 4, Option B, docker push"
+    validations: { required: true }
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command and its full output
+      render: shell
+    validations: { required: true }
+  - type: dropdown
+    id: os
+    attributes:
+      label: Your machine
+      options: [macOS (Apple Silicon), macOS (Intel), Linux, Windows + WSL2]
+    validations: { required: true }
+  - type: dropdown
+    id: subscription
+    attributes:
+      label: Azure subscription type (Session 2 onwards)
+      options: [Not using Azure yet, Free trial / free credit, Pay-as-you-go, Visual Studio / MSDN, Company subscription]
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you already tried

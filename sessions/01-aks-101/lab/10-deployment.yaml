@@ -1,0 +1,26 @@
+# A Deployment asks Kubernetes to keep two copies (pods) of the app running, and replaces any that disappear.
+# Session 3 adds probes, resource requests and rollout settings; session 9 adds the security context.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-api
+  namespace: aks101
+  labels:
+    app.kubernetes.io/name: payments-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: payments-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: payments-api
+    spec:
+      containers:
+        - name: app
+          image: payments-api:1.0          # loaded into kind with `kind load`; session 2 pulls it from ACR
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080

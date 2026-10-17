@@ -1,0 +1,54 @@
+# Checks every pull request and every push to main: the app builds and passes its tests, the lab manifests
+# are valid Kubernetes, the scripts pass shellcheck, and the docs have no broken links.
+# Actions are pinned by commit SHA (tag in the comment): Session 10 explains why.
+name: validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: app/go.mod
+          cache: false
+      - run: cd app && go vet ./... && go test ./...
+      - run: docker build -t payments-api:ci --build-arg VERSION=ci app
+      - run: docker build -f app/Dockerfile.naive -t payments-api:naive app
+
+  manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: kubeconform
+        env:
+          KUBECONFORM: v0.8.0
+          SHA256: 9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883
+        run: |
+          curl -sSLo kc.tgz "https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM/kubeconform-linux-amd64.tar.gz"
+          echo "$SHA256  kc.tgz" | sha256sum -c -
+          tar xzf kc.tgz kubeconform
+          ./kubeconform -strict -summary sessions/*/lab/
+
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: shellcheck -x infra/*.sh sessions/*/cleanup.sh
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: >-
+            --no-progress
+            --exclude '^https://github\.com/sathpal/aks-zero-to-secure/(discussions|issues)'
+            './**/*.md'
