@@ -69,6 +69,6 @@ sessions/     one folder per session: README (lab guide), lab/ manifests, cleanu
 capstone/     what to build for the capstone, and how it's reviewed
 ```
 
-## Code of conduct and licence
+## Code of conduct, privacy and licence
 
-Everyone in the series follows the [code of conduct](CODE_OF_CONDUCT.md). Code is [MIT](LICENSE) licensed. Course text is [CC BY 4.0](LICENSE-CONTENT).
+Everyone in the series follows the [code of conduct](CODE_OF_CONDUCT.md). What registration data we use and for how long: [PRIVACY.md](PRIVACY.md). Code is [MIT](LICENSE) licensed. Course text is [CC BY 4.0](LICENSE-CONTENT).
